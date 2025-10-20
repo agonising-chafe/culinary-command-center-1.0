@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "title": "Lemon Garlic Chicken",
+    "image": "/images/chicken.jpg",
+    "time": "35 min",
+    "calories": 420,
+    "ingredients": ["chicken breast", "lemon", "garlic", "olive oil"],
+    "instructions": [
+      "Preheat oven to 400°F.",
+      "Marinate chicken in lemon, garlic, and olive oil.",
+      "Bake for 25 minutes until golden."
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Caprese Salad",
+    "image": "/images/caprese.jpg",
+    "time": "10 min",
+    "calories": 280,
+    "ingredients": ["tomato", "mozzarella", "basil", "balsamic glaze"],
+    "instructions": [
+      "Slice tomato and mozzarella.",
+      "Layer with basil leaves.",
+      "Drizzle balsamic glaze and serve."
+    ]
+  }
+]
