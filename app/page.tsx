@@ -2,12 +2,12 @@
 
 import PlannerGrid from "components/PlannerGrid";
 import RecipeModal from "components/RecipeModal";
-import Navbar from "components/Navbar";
+import TopBar from "components/TopBar";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-gray-50">
-      <Navbar />
+      <TopBar />
       <PlannerGrid />
       <RecipeModal />
     </main>
