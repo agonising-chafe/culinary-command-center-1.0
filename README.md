@@ -37,3 +37,5 @@ npm run dev
 ## License
 
 MIT
+
+## Persistence (Supabase)`n`npm install @supabase/supabase-js``nAdd  .env.local  with  NEXT_PUBLIC_SUPABASE_URL  and  NEXT_PUBLIC_SUPABASE_KEY . Create a ecipes table with columns: id (uuid/int), name (text), time (int), calories (int), ingredients (text[]/json), instructions (text[]/text), image (text). The app will fall back to mock data if env is missing.\n

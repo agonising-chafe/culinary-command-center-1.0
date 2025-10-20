@@ -8,12 +8,12 @@ const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const meals = ["Lunch", "Dinner"];
 
 export default function PlannerGrid() {
-  const { recipes, mode, isLoading, setLoading } = useRecipeStore();
+  const { recipes, mode, isLoading, initialize } = useRecipeStore();
 
   React.useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 300);
-    return () => clearTimeout(t);
-  }, [setLoading]);
+    void initialize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
@@ -61,4 +61,3 @@ export default function PlannerGrid() {
     </div>
   );
 }
-
