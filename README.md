@@ -34,6 +34,32 @@ npm run dev
 - Export menu for data handling.
 - PWA support with manifest configuration.
 
+## Deployment
+
+- Full architecture and data flow: see `docs/BLUEPRINT.md:1`.
+
+Vercel settings (recommended)
+- Framework preset: `Next.js`
+- Node.js version: `20`
+- Install Command: `npm ci` (or `npm install`)
+- Build Command: `next build`
+- Output Directory: default (managed by Next.js)
+
+Environment variables (Project Settings → Environment)
+- `NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>`
+- `NEXT_PUBLIC_SUPABASE_SCHEMA=public` (optional)
+- `NEXT_PUBLIC_SUPABASE_IMAGE_COLUMN=image_url` (or `image` if your column is named that)
+
+PWA notes
+- PWA is enabled in production builds (`next build && next start`) and disabled in dev.
+- Service worker is generated at build by `next-pwa`; do not commit `public/sw.js`.
+- The app includes a dev safeguard to unregister old SWs and a production update prompt/refresh button to activate new versions safely.
+
+Troubleshooting deploys
+- If Vercel fails during “Deploying outputs…”, retry the deployment (often transient). If it recurs, contact Vercel Support with the deployment ID.
+- If clients fetch missing chunks after a deploy, use the in‑app Refresh button or hard refresh to clear stale caches and activate the new SW.
+
 ## License
 
 MIT
