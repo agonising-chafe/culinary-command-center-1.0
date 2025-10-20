@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const schema = process.env.NEXT_PUBLIC_SUPABASE_SCHEMA || "public";
 const imageColumn = process.env.NEXT_PUBLIC_SUPABASE_IMAGE_COLUMN || "image_url";
@@ -35,9 +30,18 @@ function json(data: any, status = 200) {
   return NextResponse.json(data, { status });
 }
 
+function getClient(): SupabaseClient | null {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
+
 export async function GET() {
   try {
-    const { data, error } = await supabase
+    const client = getClient();
+    if (!client) return json({ ok: false, error: "Missing Supabase env: NEXT_PUBLIC_SUPABASE_URL/ANON_KEY" }, 500);
+    const { data, error } = await client
       .schema(schema)
       .from("recipes")
       .select("*")
@@ -55,8 +59,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const recipe = sanitizeRecipe(body);
-
-    const { data, error } = await supabase
+    const client = getClient();
+    if (!client) return json({ ok: false, error: "Missing Supabase env: NEXT_PUBLIC_SUPABASE_URL/ANON_KEY" }, 500);
+    const { data, error } = await client
       .schema(schema)
       .from("recipes")
       .insert([
@@ -86,8 +91,9 @@ export async function PUT(req: NextRequest) {
     if (!body.id) return json({ ok: false, error: "Missing recipe ID" }, 400);
 
     const recipe = sanitizeRecipe(body);
-
-    const { data, error } = await supabase
+    const client = getClient();
+    if (!client) return json({ ok: false, error: "Missing Supabase env: NEXT_PUBLIC_SUPABASE_URL/ANON_KEY" }, 500);
+    const { data, error } = await client
       .schema(schema)
       .from("recipes")
       .update({
@@ -115,8 +121,9 @@ export async function DELETE(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
     if (!id) return json({ ok: false, error: "Missing recipe ID" }, 400);
-
-    const { error } = await supabase.schema(schema).from("recipes").delete().eq("id", id);
+    const client = getClient();
+    if (!client) return json({ ok: false, error: "Missing Supabase env: NEXT_PUBLIC_SUPABASE_URL/ANON_KEY" }, 500);
+    const { error } = await client.schema(schema).from("recipes").delete().eq("id", id);
     if (error) throw error;
 
     return json({ ok: true, message: `Recipe ${id} deleted.` });
