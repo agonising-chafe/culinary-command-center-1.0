@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Recipe } from "types/recipe";
+export type { Recipe } from "types/recipe";
 import mockRecipes from "lib/mockRecipes";
 import { supabase } from "lib/supabaseClient";
 
