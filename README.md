@@ -34,6 +34,69 @@ npm run dev
 - Export menu for data handling.
 - PWA support with manifest configuration.
 
+## Supabase Persistence
+
+Enable live data via Supabase. The app falls back to bundled mock data if env vars are missing or the API fails.
+
+1) Install client library (already in package.json, run install if needed):
+
+```bash
+npm install @supabase/supabase-js
+```
+
+2) Create `.env.local` with:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
+NEXT_PUBLIC_SUPABASE_SCHEMA=public        # optional
+NEXT_PUBLIC_SUPABASE_IMAGE_COLUMN=image_url  # or "image" if your column uses that name
+```
+
+3) Create `recipes` table with sensible defaults (Postgres):
+
+```sql
+-- basic structure (adjust types as needed)
+create table if not exists public.recipes (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  image_url text,
+  time int default 0,
+  calories int default 0,
+  ingredients jsonb default '[]'::jsonb,
+  instructions jsonb default '[]'::jsonb,
+  created_at timestamptz default now()
+);
+
+-- if migrating from text/text[] columns
+alter table public.recipes
+  alter column time drop not null,
+  alter column time set default 0,
+  alter column calories drop not null,
+  alter column calories set default 0;
+
+alter table public.recipes
+  alter column ingredients drop default,
+  alter column instructions drop default;
+
+alter table public.recipes
+  alter column ingredients type jsonb using to_jsonb(ingredients),
+  alter column instructions type jsonb using to_jsonb(instructions);
+
+alter table public.recipes
+  alter column ingredients set default '[]'::jsonb,
+  alter column instructions set default '[]'::jsonb;
+```
+
+4) Test locally
+
+```bash
+npm run dev
+```
+
+- GET: http://localhost:3000/api/recipes
+- POST/PUT/DELETE: see docs/BLUEPRINT.md for examples and API contract.
+
 ## Deployment
 
 - Full architecture and data flow: see `docs/BLUEPRINT.md:1`.
@@ -63,5 +126,3 @@ Troubleshooting deploys
 ## License
 
 MIT
-
-## Persistence (Supabase)`n`npm install @supabase/supabase-js``nAdd  .env.local  with  NEXT_PUBLIC_SUPABASE_URL  and  NEXT_PUBLIC_SUPABASE_KEY . Create a ecipes table with columns: id (uuid/int), name (text), time (int), calories (int), ingredients (text[]/json), instructions (text[]/text), image (text). The app will fall back to mock data if env is missing.\n
