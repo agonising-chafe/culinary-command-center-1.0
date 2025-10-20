@@ -171,3 +171,9 @@ For deeper dives, start with these files in your editor:
 - Navbar: `components/Navbar.tsx:1`
 - Modal: `components/RecipeModal.tsx:1`
 
+## Health Endpoint
+
+- File: `app/api/health/route.ts:1`
+- GET `/api/health`
+  - Returns `{ ok: boolean, env: { supabase_url_set, supabase_key_set, schema }, supabase: { reachable, query_ok, error? }, table?: { name, exists } }`
+  - Always returns HTTP 200 (even when env is missing) to simplify checks.
