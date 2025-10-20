@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  manifest: "/manifest.webmanifest",
+  manifest: "/manifest.json",
   themeColor: "#B5D2A3",
 };
 
