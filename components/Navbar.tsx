@@ -1,5 +1,6 @@
 "use client";
 import ExportMenu from "components/ExportMenu";
+import UpdateButton from "components/UpdateButton";
 import { useRecipeStore } from "lib/useRecipeStore";
 
 export default function Navbar() {
@@ -22,6 +23,7 @@ export default function Navbar() {
           >
             {mode === "edit" ? "Edit Mode" : "View Mode"}
           </button>
+          <UpdateButton />
           <ExportMenu />
         </div>
       </div>
