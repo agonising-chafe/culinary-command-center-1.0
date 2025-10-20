@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Recipe } from "types/recipe";
 import mockRecipes from "lib/mockRecipes";
-import { getSupabase } from "lib/supabaseClient";
+import { supabase } from "lib/supabaseClient";
 
 type Mode = "view" | "edit";
 
@@ -33,7 +33,6 @@ export const useRecipeStore = create<RecipeState>((set) => ({
   initialize: async () => {
     set({ isLoading: true });
     try {
-      const supabase = await getSupabase();
       if (supabase) {
         const schema = process.env.NEXT_PUBLIC_SUPABASE_SCHEMA || "public";
         const { data, error } = await supabase
