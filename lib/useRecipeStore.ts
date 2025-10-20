@@ -35,7 +35,11 @@ export const useRecipeStore = create<RecipeState>((set) => ({
     try {
       const supabase = await getSupabase();
       if (supabase) {
-        const { data, error } = await supabase.from("recipes").select("*");
+        const schema = process.env.NEXT_PUBLIC_SUPABASE_SCHEMA || "public";
+        const { data, error } = await supabase
+          .schema(schema)
+          .from("recipes")
+          .select("*");
         if (error) throw error;
         const mapped: Recipe[] = (data || []).map((r: any) => ({
           id: String(r.id),
@@ -55,8 +59,8 @@ export const useRecipeStore = create<RecipeState>((set) => ({
       // Fallback to mock data when Supabase is not configured
       console.info("Using mock recipes (no Supabase env detected)");
       set({ recipes: mockRecipes, isLoading: false, source: "mock" });
-    } catch {
-      console.warn("Supabase fetch failed; falling back to mock.");
+    } catch (err) {
+      console.warn("Supabase fetch failed; falling back to mock.", err);
       set({ recipes: mockRecipes, isLoading: false, source: "mock" });
     }
   },
