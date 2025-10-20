@@ -41,16 +41,24 @@ export const useRecipeStore = create<RecipeState>((set) => ({
           .from("recipes")
           .select("*");
         if (error) throw error;
+        const fixText = (s: string) =>
+          s
+            // Replace mojibake replacement char before F/C with degree symbol
+            .replace(/\uFFFD(?=[FC])/g, "°")
+            // Also handle common mis-encodings like '400�F'
+            .replace(/�(?=[FC])/g, "°");
         const mapped: Recipe[] = (data || []).map((r: any) => ({
           id: String(r.id),
-          name: r.name,
+          name: typeof r.name === "string" ? fixText(r.name) : r.name,
           image: r.image || "/placeholder.svg",
           time: typeof r.time === "number" ? r.time : parseInt(String(r.time || 0)),
           calories: r.calories ?? 0,
           ingredients: Array.isArray(r.ingredients) ? r.ingredients : r.ingredients ? [String(r.ingredients)] : [],
           instructions: Array.isArray(r.instructions)
-            ? r.instructions.join("\n")
-            : r.instructions ?? "",
+            ? r.instructions.map((x: any) => (typeof x === "string" ? fixText(x) : x))
+            : typeof r.instructions === "string"
+            ? fixText(r.instructions)
+            : "",
         }));
         console.info("Supabase recipes fetched:", mapped.length);
         set({ recipes: mapped, isLoading: false, source: "db" });
