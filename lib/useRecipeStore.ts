@@ -1,5 +1,4 @@
-import { create } from "zustand";
-import recipes from "../data/recipes.json";
+import { create } from "zustand";  // Fix import for Zustand v5+
 
 interface Recipe {
   id: number;
@@ -14,11 +13,11 @@ interface Recipe {
 interface RecipeState {
   recipes: Recipe[];
   selected: Recipe | null;
-  selectRecipe: (r: Recipe | null) => void;
+  selectRecipe: (recipe: Recipe) => void;
 }
 
-export const useRecipeStore = create<RecipeState>((set) => ({
-  recipes,
+export const useRecipeStore = create<RecipeState>((set: (partial: Partial<RecipeState>) => void) => ({
+  recipes: [],
   selected: null,
-  selectRecipe: (r) => set({ selected: r }),
+  selectRecipe: (recipe: Recipe) => set({ selected: recipe }),
 }));

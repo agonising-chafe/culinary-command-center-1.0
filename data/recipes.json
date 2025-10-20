@@ -8,7 +8,7 @@
     "ingredients": ["chicken breast", "lemon", "garlic", "olive oil"],
     "instructions": [
       "Preheat oven to 400°F.",
-      "Marinate chicken in lemon, garlic, and olive oil.",
+      "Marinate chicken in lemon, garlic, and oil.",
       "Bake for 25 minutes until golden."
     ]
   },
@@ -18,11 +18,11 @@
     "image": "/images/caprese.jpg",
     "time": "10 min",
     "calories": 280,
-    "ingredients": ["tomato", "mozzarella", "basil", "balsamic glaze"],
+    "ingredients": ["tomato", "mozzarella", "basil", "balsamic"],
     "instructions": [
       "Slice tomato and mozzarella.",
       "Layer with basil leaves.",
-      "Drizzle balsamic glaze and serve."
+      "Drizzle balsamic reduction."
     ]
   }
 ]
