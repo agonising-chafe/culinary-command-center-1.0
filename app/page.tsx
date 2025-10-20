@@ -1,14 +1,15 @@
-"use client";
+﻿"use client";
+import PlannerGrid from "@/components/PlannerGrid";
+import RecipeModal from "@/components/RecipeModal";
+import ExportMenu from "@/components/ExportMenu";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <h1 className="text-4xl font-bold text-gray-800">
-        🍳 Culinary Command Center
-      </h1>
-      <p className="mt-4 text-gray-600">
-        Minimal client page to verify build integrity.
-      </p>
+    <main className="relative min-h-screen bg-gray-50">
+      <h1 className="text-center text-3xl font-bold pt-8">🍳 Culinary Command Center</h1>
+      <ExportMenu />
+      <PlannerGrid />
+      <RecipeModal />
     </main>
   );
 }

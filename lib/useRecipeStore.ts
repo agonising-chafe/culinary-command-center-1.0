@@ -1,23 +1,17 @@
-import { create } from "zustand";  // Fix import for Zustand v5+
-
-interface Recipe {
-  id: number;
-  title: string;
-  image: string;
-  time: string;
-  calories: number;
-  ingredients: string[];
-  instructions: string[];
-}
+﻿import create from "zustand";
+import { Recipe } from "@/types/recipe";
+import mockRecipes from "@/lib/mockRecipes";
 
 interface RecipeState {
   recipes: Recipe[];
   selected: Recipe | null;
   selectRecipe: (recipe: Recipe) => void;
+  clearSelection: () => void;
 }
 
-export const useRecipeStore = create<RecipeState>((set: (partial: Partial<RecipeState>) => void) => ({
-  recipes: [],
+export const useRecipeStore = create<RecipeState>((set) => ({
+  recipes: mockRecipes,
   selected: null,
-  selectRecipe: (recipe: Recipe) => set({ selected: recipe }),
+  selectRecipe: (recipe) => set({ selected: recipe }),
+  clearSelection: () => set({ selected: null }),
 }));
