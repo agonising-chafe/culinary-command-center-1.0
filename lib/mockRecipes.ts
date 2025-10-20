@@ -4,7 +4,7 @@ const mockRecipes: Recipe[] = [
   {
     id: "1",
     name: "Lemon Garlic Chicken",
-    image: "/images/chicken.jpg",
+    image: "/placeholder.svg",
     time: 35,
     calories: 420,
     ingredients: [
@@ -24,7 +24,7 @@ const mockRecipes: Recipe[] = [
   {
     id: "2",
     name: "Veggie Stir Fry",
-    image: "/images/stirfry.jpg",
+    image: "/placeholder.svg",
     time: 20,
     calories: 310,
     ingredients: [
@@ -44,7 +44,7 @@ const mockRecipes: Recipe[] = [
   {
     id: "3",
     name: "Pasta Primavera",
-    image: "/images/pasta.jpg",
+    image: "/placeholder.svg",
     time: 25,
     calories: 450,
     ingredients: [
