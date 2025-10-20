@@ -10,6 +10,7 @@ interface RecipeState {
   selected: Recipe | null;
   mode: Mode;
   isLoading: boolean;
+  source: "db" | "mock";
   selectRecipe: (recipe: Recipe) => void;
   clearSelection: () => void;
   toggleMode: () => void;
@@ -23,6 +24,7 @@ export const useRecipeStore = create<RecipeState>((set) => ({
   selected: null,
   mode: "view",
   isLoading: true,
+  source: "mock",
   selectRecipe: (recipe) => set({ selected: recipe }),
   clearSelection: () => set({ selected: null }),
   toggleMode: () => set((s) => ({ mode: s.mode === "view" ? "edit" : "view" })),
@@ -46,13 +48,16 @@ export const useRecipeStore = create<RecipeState>((set) => ({
             ? r.instructions.join("\n")
             : r.instructions ?? "",
         }));
-        set({ recipes: mapped, isLoading: false });
+        console.info("Supabase recipes fetched:", mapped.length);
+        set({ recipes: mapped, isLoading: false, source: "db" });
         return;
       }
       // Fallback to mock data when Supabase is not configured
-      set({ recipes: mockRecipes, isLoading: false });
+      console.info("Using mock recipes (no Supabase env detected)");
+      set({ recipes: mockRecipes, isLoading: false, source: "mock" });
     } catch {
-      set({ recipes: mockRecipes, isLoading: false });
+      console.warn("Supabase fetch failed; falling back to mock.");
+      set({ recipes: mockRecipes, isLoading: false, source: "mock" });
     }
   },
 }));
