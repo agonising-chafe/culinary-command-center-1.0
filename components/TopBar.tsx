@@ -10,6 +10,12 @@ export default function TopBar() {
       <h1 className="text-lg font-semibold text-gray-800">🍳 Culinary Command Center</h1>
       <div className="flex items-center gap-4">
         <button
+          onClick={() => window.print()}
+          className="px-3 py-1 rounded bg-gray-200 text-gray-700 hover:bg-gray-300"
+        >
+          🖨️ Print
+        </button>
+        <button
           onClick={refresh}
           className="px-3 py-1 rounded bg-primary text-white hover:opacity-90"
           disabled={isLoading}
@@ -27,4 +33,3 @@ export default function TopBar() {
     </header>
   );
 }
-
