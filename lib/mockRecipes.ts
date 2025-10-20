@@ -1,4 +1,4 @@
-﻿import { Recipe } from "types/recipe";
+import { Recipe } from "types/recipe";
 
 const mockRecipes: Recipe[] = [
   {
@@ -41,3 +41,4 @@ const mockRecipes: Recipe[] = [
 ];
 
 export default mockRecipes;
+

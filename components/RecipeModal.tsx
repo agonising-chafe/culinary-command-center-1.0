@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useRecipeStore } from "lib/useRecipeStore";
 
 export default function RecipeModal() {
@@ -8,7 +8,7 @@ export default function RecipeModal() {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="bg-white rounded-xl max-w-md w-full p-6 overflow-y-auto max-h-[90vh]">
         <h2 className="text-2xl font-bold mb-2">{selected.name}</h2>
-        <p className="text-gray-500 mb-4">{selected.time} · {selected.calories} kcal</p>
+        <p className="text-gray-500 mb-4">{selected.time} • {selected.calories} kcal</p>
         <h3 className="font-semibold">Ingredients</h3>
         <ul className="list-disc list-inside mb-4 text-sm">
           {selected.ingredients?.map((i: string, index: number) => <li key={index}>{i}</li>)}
@@ -26,3 +26,4 @@ export default function RecipeModal() {
     </div>
   );
 }
+
