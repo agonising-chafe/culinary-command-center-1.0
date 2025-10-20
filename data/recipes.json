@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Lemon Garlic Chicken",
-    "image": "/images/chicken.jpg",
+    "image": "/placeholder.svg",
     "time": "35 min",
     "calories": 420,
     "ingredients": ["chicken breast", "lemon", "garlic", "olive oil"],
@@ -15,7 +15,7 @@
   {
     "id": 2,
     "title": "Caprese Salad",
-    "image": "/images/caprese.jpg",
+    "image": "/placeholder.svg",
     "time": "10 min",
     "calories": 280,
     "ingredients": ["tomato", "mozzarella", "basil", "balsamic"],
@@ -26,4 +26,5 @@
     ]
   }
 ]
+
 
