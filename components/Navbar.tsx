@@ -12,9 +12,21 @@ export default function Navbar() {
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
         <h1 className="text-xl sm:text-2xl font-bold">Culinary Command Center</h1>
         <div className="ml-auto flex items-center gap-3">
-          <span className="inline-flex items-center rounded-full border px-2.5 py-1 text-xs text-gray-700 bg-white">
-            Data: {source === "db" ? "Live DB" : "Mock Data"}
-          </span>
+          {source === "db" ? (
+            <span className="inline-flex items-center rounded-full border px-2.5 py-1 text-xs text-gray-700 bg-white" title="Using Supabase">
+              Data: Live DB
+            </span>
+          ) : (
+            <a
+              href="/api/health"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full border px-2.5 py-1 text-xs bg-amber-50 border-amber-300 text-amber-800 hover:bg-amber-100 transition"
+              title="Mock data in use. Click to open health check."
+            >
+              Data: Mock (configure DB)
+            </a>
+          )}
           <button
             onClick={toggleMode}
             className="rounded-full border px-3 py-1 text-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
