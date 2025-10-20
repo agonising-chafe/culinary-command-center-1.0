@@ -1,4 +1,4 @@
-﻿import { Recipe } from "@/types/recipe";
+﻿import { Recipe } from "types/recipe";
 
 const mockRecipes: Recipe[] = [
   {
@@ -6,7 +6,7 @@ const mockRecipes: Recipe[] = [
     name: "Lemon Garlic Salmon",
     image: "/recipe-images/salmon.jpg",
     calories: 420,
-    cookTime: "25 min",
+    time: 25,
     ingredients: [
       "2 salmon fillets",
       "1 lemon",
@@ -25,7 +25,7 @@ const mockRecipes: Recipe[] = [
     name: "Avocado Chicken Salad",
     image: "/recipe-images/avocado-chicken.jpg",
     calories: 360,
-    cookTime: "15 min",
+    time: 15,
     ingredients: [
       "2 cups cooked chicken",
       "1 avocado",

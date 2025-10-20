@@ -2,8 +2,8 @@
   id: string;
   name: string;
   image: string;
+  time: number;
   calories: number;
-  cookTime: string;
-  ingredients: string[];
-  instructions: string[];
+  ingredients?: string[];
+  instructions?: string | string[];
 }

@@ -12,7 +12,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
       <img src={recipe.image} alt={recipe.name} className="rounded-t-xl h-32 w-full object-cover" />
       <div className="p-2 text-sm">
         <p className="font-semibold">{recipe.name}</p>
-        <p className="text-xs text-gray-500">{recipe.cookTime} · {recipe.calories} kcal</p>
+        <p className="text-xs text-gray-500">{recipe.time} · {recipe.calories} kcal</p>
       </div>
     </div>
   );
