@@ -1,4 +1,14 @@
+# dependencies
+node_modules/
+
+# build
+.next/
+out/
+
+# misc
+package-lock.json
+.DS_Store
+.env
 node_modules/
 .next/
 package-lock.json
-.DS_Store
