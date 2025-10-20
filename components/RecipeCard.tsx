@@ -2,12 +2,16 @@
 import { Recipe } from "types/recipe";
 import { useRecipeStore } from "lib/useRecipeStore";
 
-export default function RecipeCard({ recipe }: { recipe: Recipe }) {
+export default function RecipeCard({ recipe, disabled = false }: { recipe: Recipe; disabled?: boolean }) {
   const selectRecipe = useRecipeStore((s) => s.selectRecipe);
   return (
     <div
-      className="cursor-pointer rounded-xl border bg-white shadow-sm hover:shadow-md transition"
-      onClick={() => selectRecipe(recipe)}
+      className={
+        "rounded-xl border bg-white shadow-sm transition " +
+        (disabled ? "opacity-70 cursor-default" : "cursor-pointer hover:shadow-md")
+      }
+      onClick={() => !disabled && selectRecipe(recipe)}
+      aria-disabled={disabled}
     >
       <img
         src={recipe.image}
@@ -26,3 +30,4 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
     </div>
   );
 }
+
