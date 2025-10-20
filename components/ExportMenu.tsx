@@ -3,9 +3,11 @@
 export default function ExportMenu() {
   const printPage = () => window.print();
   return (
-    <div className="absolute top-4 right-4">
-      <button onClick={printPage} className="px-4 py-2 bg-gray-800 text-white rounded-lg">Print</button>
-    </div>
+    <button
+      onClick={printPage}
+      className="px-3 py-1.5 rounded-full bg-gray-800 text-white text-sm hover:bg-gray-700 transition"
+    >
+      Print
+    </button>
   );
 }
-

@@ -11,7 +11,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
         <h1 className="text-xl sm:text-2xl font-bold">Culinary Command Center</h1>
         <div className="ml-auto flex items-center gap-3">
-          <span className="hidden sm:inline-flex items-center rounded-full border px-2.5 py-1 text-xs text-gray-700 bg-white">
+          <span className="inline-flex items-center rounded-full border px-2.5 py-1 text-xs text-gray-700 bg-white">
             Data: {source === "db" ? "Live DB" : "Mock Data"}
           </span>
           <button
