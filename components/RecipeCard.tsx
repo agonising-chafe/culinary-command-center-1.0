@@ -9,7 +9,16 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
       className="cursor-pointer rounded-xl border bg-white shadow-sm hover:shadow-md transition"
       onClick={() => selectRecipe(recipe)}
     >
-      <img src={recipe.image} alt={recipe.name} className="rounded-t-xl h-32 w-full object-cover" />
+      <img
+        src={recipe.image}
+        alt={recipe.name}
+        className="rounded-t-xl h-32 w-full object-cover"
+        onError={(e) => {
+          const img = e.currentTarget as HTMLImageElement;
+          if (img.src.endsWith("/placeholder.svg")) return;
+          img.src = "/placeholder.svg";
+        }}
+      />
       <div className="p-2 text-sm">
         <p className="font-semibold">{recipe.name}</p>
         <p className="text-xs text-gray-500">{recipe.time} • {recipe.calories} kcal</p>
@@ -17,4 +26,3 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
     </div>
   );
 }
-

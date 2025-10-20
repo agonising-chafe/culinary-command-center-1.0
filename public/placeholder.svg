@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="320" viewBox="0 0 512 320">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FAF8F5"/>
+      <stop offset="100%" stop-color="#E8E5E1"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="320" fill="url(#g)"/>
+  <g fill="#B5D2A3">
+    <circle cx="256" cy="200" r="100" opacity="0.25"/>
+    <rect x="128" y="220" width="256" height="16" rx="8"/>
+  </g>
+  <g fill="#6B7280" font-family="Inter, Arial, sans-serif" text-anchor="middle">
+    <text x="256" y="120" font-size="28" font-weight="700">Image not available</text>
+    <text x="256" y="152" font-size="16">Using placeholder</text>
+  </g>
+  <g stroke="#D1D5DB" stroke-width="2" fill="none">
+    <circle cx="256" cy="180" r="36"/>
+    <path d="M236 190c8-12 16-12 24 0s16 12 24 0"/>
+  </g>
+</svg>
+
