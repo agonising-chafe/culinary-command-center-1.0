@@ -1,6 +1,6 @@
-﻿import create from "zustand";
-import { Recipe } from "@/types/recipe";
-import mockRecipes from "@/lib/mockRecipes";
+﻿import { create } from "zustand";
+import { Recipe } from "types/recipe";
+import mockRecipes from "lib/mockRecipes";
 
 interface RecipeState {
   recipes: Recipe[];

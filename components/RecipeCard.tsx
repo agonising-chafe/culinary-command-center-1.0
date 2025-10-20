@@ -1,6 +1,6 @@
 ﻿"use client";
-import { Recipe } from "@/types/recipe";
-import { useRecipeStore } from "@/lib/useRecipeStore";
+import { Recipe } from "types/recipe";
+import { useRecipeStore } from "lib/useRecipeStore";
 
 export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   const selectRecipe = useRecipeStore((s) => s.selectRecipe);

@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useRecipeStore } from "@/lib/useRecipeStore";
+import { useRecipeStore } from "lib/useRecipeStore";
 
 export default function RecipeModal() {
   const { selected, clearSelection } = useRecipeStore();

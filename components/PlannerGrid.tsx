@@ -1,6 +1,8 @@
 ﻿"use client";
-import { useRecipeStore } from "@/lib/useRecipeStore";
-import RecipeCard from "@/components/RecipeCard";
+
+import React from "react";
+import { useRecipeStore } from "lib/useRecipeStore";
+import RecipeCard from "components/RecipeCard";
 
 const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const meals = ["Lunch","Dinner"];
@@ -12,12 +14,12 @@ export default function PlannerGrid() {
       <div></div>
       {days.map((d) => <div key={d} className="text-center font-semibold">{d}</div>)}
       {meals.map((meal) => (
-        <>
+        <React.Fragment key={meal}>
           <div className="font-bold">{meal}</div>
           {days.map((day,i) => (
             <RecipeCard key={`${day}-${meal}-${i}`} recipe={recipes[(i+ (meal==="Dinner"?1:0)) % recipes.length]} />
           ))}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
