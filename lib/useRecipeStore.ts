@@ -14,9 +14,11 @@ interface RecipeState {
   selectRecipe: (recipe: Recipe) => void;
   clearSelection: () => void;
   toggleMode: () => void;
+  setMode: (mode: Mode) => void;
   setLoading: (loading: boolean) => void;
   setRecipes: (recipes: Recipe[]) => void;
   initialize: () => Promise<void>;
+  refresh: () => Promise<void>;
 }
 
 export const useRecipeStore = create<RecipeState>((set) => ({
@@ -28,6 +30,7 @@ export const useRecipeStore = create<RecipeState>((set) => ({
   selectRecipe: (recipe) => set({ selected: recipe }),
   clearSelection: () => set({ selected: null }),
   toggleMode: () => set((s) => ({ mode: s.mode === "view" ? "edit" : "view" })),
+  setMode: (mode) => set({ mode }),
   setLoading: (loading) => set({ isLoading: loading }),
   setRecipes: (recipes) => set({ recipes }),
   initialize: async () => {
@@ -60,7 +63,13 @@ export const useRecipeStore = create<RecipeState>((set) => ({
             : "",
         }));
         console.info("Supabase recipes fetched:", mapped.length);
-        set({ recipes: mapped, isLoading: false, source: "db" });
+        if (mapped.length > 0) {
+          set({ recipes: mapped, isLoading: false, source: "db" });
+          return;
+        }
+        // Empty DB: fall back to mock for a better first-run experience
+        console.info("Supabase returned 0 rows; using mock data");
+        set({ recipes: mockRecipes, isLoading: false, source: "mock" });
         return;
       }
       // Fallback to mock data when Supabase is not configured
@@ -69,6 +78,41 @@ export const useRecipeStore = create<RecipeState>((set) => ({
     } catch (err) {
       console.warn("Supabase fetch failed; falling back to mock.", err);
       set({ recipes: mockRecipes, isLoading: false, source: "mock" });
+    }
+  },
+  refresh: async () => {
+    try {
+      if (!supabase) {
+        set({ recipes: mockRecipes, source: "mock" });
+        return;
+      }
+      const schema = process.env.NEXT_PUBLIC_SUPABASE_SCHEMA || "public";
+      const { data, error } = await supabase
+        .schema(schema)
+        .from("recipes")
+        .select("*");
+      if (error) throw error;
+      const fixText = (s: string) => s.replace(/\uFFFD(?=[FC])/g, "°").replace(/�(?=[FC])/g, "°");
+      const mapped: Recipe[] = (data || []).map((r: any) => ({
+        id: String(r.id),
+        name: typeof r.name === "string" ? fixText(r.name) : r.name,
+        image: r.image || "/placeholder.svg",
+        time: typeof r.time === "number" ? r.time : parseInt(String(r.time || 0)),
+        calories: r.calories ?? 0,
+        ingredients: Array.isArray(r.ingredients) ? r.ingredients : r.ingredients ? [String(r.ingredients)] : [],
+        instructions: Array.isArray(r.instructions)
+          ? r.instructions.map((x: any) => (typeof x === "string" ? fixText(x) : x))
+          : typeof r.instructions === "string"
+          ? fixText(r.instructions)
+          : "",
+      }));
+      if (mapped.length > 0) {
+        set({ recipes: mapped, source: "db" });
+      } else {
+        set({ recipes: mockRecipes, source: "mock" });
+      }
+    } catch (err) {
+      console.warn("Supabase refresh failed; keeping existing state.", err);
     }
   },
 }));
