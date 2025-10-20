@@ -5,7 +5,7 @@ import SWUpdatePrompt from "@/components/SWUpdatePrompt";
 import RefreshToast from "@/components/RefreshToast";
 
 export const metadata: Metadata = {
-  manifest: "/manifest.json",
+  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {
