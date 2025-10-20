@@ -8,12 +8,13 @@ module.exports = {
     extend: {
       colors: {
         primary: "#B5D2A3",
-        accent: "#D27C5A",
+        accent: "#FAF8F5",
         muted: "#FAF8F5",
+        text: "#333333",
         danger: "#E45C5C"
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
         serif: ["Playfair Display", "serif"]
       }
     }
