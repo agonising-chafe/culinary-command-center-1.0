@@ -5,9 +5,8 @@ import { useRecipeStore } from "@/lib/useRecipeStore";
 import { useEffect } from "react";
 
 export default function RecipeModal() {
-  const { selected, clearSelection } = useRecipeStore();
+  const { selected, clearSelection, saveRecipe, deleteRecipe, source } = useRecipeStore();
 
-  // close on ESC
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") clearSelection();
@@ -32,7 +31,6 @@ export default function RecipeModal() {
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            {/* Header Image */}
             <div className="relative h-56 w-full overflow-hidden">
               <img
                 src={selected.image || "/placeholder.svg"}
@@ -47,16 +45,15 @@ export default function RecipeModal() {
                 onClick={clearSelection}
                 className="absolute top-3 right-3 rounded-full bg-black/60 text-white px-2 py-1 text-sm hover:bg-black/80 transition"
               >
-                ✕
+                ?
               </button>
             </div>
 
-            {/* Content */}
             <div className="p-6 space-y-4">
               <h2 className="text-2xl font-semibold text-gray-800">{selected.name}</h2>
               <div className="flex gap-4 text-sm text-gray-500">
-                <span>⏱ {selected.time} min</span>
-                <span>🔥 {selected.calories} kcal</span>
+                <span>? {selected.time} min</span>
+                <span>?? {selected.calories} kcal</span>
               </div>
 
               <section>
@@ -81,13 +78,37 @@ export default function RecipeModal() {
                 </ol>
               </section>
 
-              {/* Action Buttons */}
               <div className="flex justify-end gap-3 pt-3">
+                <button
+                  onClick={async () => {
+                    if (!selected) return;
+                    try {
+                      await saveRecipe(selected);
+                    } catch {}
+                  }}
+                  className="px-3 py-1.5 rounded bg-green-600 text-white hover:bg-green-700 disabled:opacity-60"
+                  disabled={!selected || source !== "db"}
+                  title={source === "db" ? "Save to database" : "Connect DB to enable save"}
+                >
+                  Save
+                </button>
+                <button
+                  onClick={async () => {
+                    if (!selected) return;
+                    await deleteRecipe(selected.id);
+                    clearSelection();
+                  }}
+                  className="px-3 py-1.5 rounded bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
+                  disabled={!selected || source !== "db"}
+                  title={source === "db" ? "Delete from database" : "Connect DB to enable delete"}
+                >
+                  Delete
+                </button>
                 <button
                   onClick={() => window.print()}
                   className="px-3 py-1.5 rounded bg-gray-100 text-gray-700 hover:bg-gray-200"
                 >
-                  🖨️ Print
+                  ??? Print
                 </button>
                 <button
                   onClick={async () => {
@@ -103,7 +124,7 @@ export default function RecipeModal() {
                   }}
                   className="px-3 py-1.5 rounded bg-primary text-white hover:opacity-90"
                 >
-                  📤 Share
+                  ?? Share
                 </button>
               </div>
             </div>

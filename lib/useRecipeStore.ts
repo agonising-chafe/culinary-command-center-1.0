@@ -73,8 +73,13 @@ export const useRecipeStore = create<RecipeState>((set) => ({
   initialize: async () => {
     set({ isLoading: true, error: null });
     try {
-      const res = await fetch("/api/recipes");
-      const json = await res.json();
+      let res = await fetch("/api/recipes");
+      let json = await res.json();
+      if (!res.ok || !json.ok) {
+        await new Promise((r) => setTimeout(r, 400));
+        res = await fetch("/api/recipes");
+        json = await res.json();
+      }
       if (!res.ok || !json.ok) throw new Error(json.error || "Failed to fetch recipes");
       const mapped: Recipe[] = (json.data || []).map(mapRowToRecipe);
       set({ recipes: mapped, isLoading: false, source: "db", error: null });
@@ -86,8 +91,13 @@ export const useRecipeStore = create<RecipeState>((set) => ({
 
   refresh: async () => {
     try {
-      const res = await fetch("/api/recipes");
-      const json = await res.json();
+      let res = await fetch("/api/recipes");
+      let json = await res.json();
+      if (!res.ok || !json.ok) {
+        await new Promise((r) => setTimeout(r, 400));
+        res = await fetch("/api/recipes");
+        json = await res.json();
+      }
       if (!res.ok || !json.ok) throw new Error(json.error || "Failed to fetch");
       const mapped: Recipe[] = (json.data || []).map(mapRowToRecipe);
       set({ recipes: mapped, source: "db", error: null });
