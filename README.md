@@ -1,5 +1,7 @@
 # Culinary Command Center 1.0
 
+[![CI](https://github.com/agonising-chafe/culinary-command-center-1.0/actions/workflows/ci.yml/badge.svg)](https://github.com/agonising-chafe/culinary-command-center-1.0/actions/workflows/ci.yml)
+
 This project is a Next.js application designed as a culinary command center for planning recipes and managing culinary tasks.
 
 ## Project Structure
@@ -135,3 +137,10 @@ MIT
 
 - Start with `AGENTS.md` for a concise repository overview, conventions, and safety scope.
 - Use `docs/BLUEPRINT.md` for deeper architecture, data flow, and API contract.
+
+
+## Releases
+
+- Changelog: see `CHANGELOG.md`
+- Latest releases: https://github.com/agonising-chafe/culinary-command-center-1.0/releases
+- Current tag: `v0.5.0`
