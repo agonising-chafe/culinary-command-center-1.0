@@ -130,3 +130,8 @@ Troubleshooting
 ## License
 
 MIT
+
+## For Agents
+
+- Start with `AGENTS.md` for a concise repository overview, conventions, and safety scope.
+- Use `docs/BLUEPRINT.md` for deeper architecture, data flow, and API contract.
