@@ -1,0 +1,32 @@
+name: Bug report
+about: Create a report to help us improve
+labels: bug
+
+title: "[bug] "
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened? What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide minimal steps or a link/snippet.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Affected URL (if deployed)
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Screenshots

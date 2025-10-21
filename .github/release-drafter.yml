@@ -1,0 +1,18 @@
+name-template: 'v$RESOLVED_VERSION'
+
+categories:
+  - title: '🚀 Features'
+    labels: ['feat', 'feature', 'enhancement']
+  - title: '🐛 Fixes'
+    labels: ['fix', 'bug']
+  - title: '🧰 Maintenance'
+    labels: ['chore', 'deps', 'docs']
+
+change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
+
+template: |
+  ## Changes
+  $CHANGES
+
+  ## Contributors
+  $CONTRIBUTORS
