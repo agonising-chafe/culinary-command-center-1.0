@@ -94,3 +94,21 @@ lib/useRecipeStore.ts
 - Regions preference set per route; not in vercel.json
 
 When in doubt, prefer small, testable changes and update docs/BLUEPRINT.md or README.md when behavior changes.
+
+## Contribution Guide (for Agents)
+- Branching
+  - Create a feature branch per change (e.g., `feat/api-crud`, `fix/pwa-cache`, `docs/blueprint`). If branching isn’t available, keep commits scoped and descriptive.
+- Commit style
+  - Use imperative, scoped messages: `feat(store): add retry backoff`, `fix(ui): disable save on invalid form`, `docs: add agent context`.
+  - One logical change per commit; avoid mixing unrelated edits.
+- Pull requests (if applicable)
+  - Keep PRs small and focused. Include a brief summary, affected files, and verification steps (build, endpoints tested).
+  - Reference any follow‑ups explicitly.
+- Code style
+  - Match existing patterns (TypeScript, functional React, clear names). Avoid one‑letter vars; prefer small, pure helpers.
+- Testing/validation
+  - Run `npm run build` locally. Manually hit `/api/health` and `/api/recipes` if you touched API/store.
+- Safety checklist
+  - No secrets in code or logs; `.env.local` stays uncommitted.
+  - Don’t commit generated `public/sw.js` or `workbox-*`.
+  - Avoid destructive DB changes; provide SQL in docs when needed.
