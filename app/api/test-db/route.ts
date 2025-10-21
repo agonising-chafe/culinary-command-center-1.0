@@ -1,4 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
+export const runtime = 'nodejs';
+export const preferredRegion = ["pdx1", "sfo1", "lhr1"];
 
 export async function GET() {
   if (!supabase) {
@@ -18,4 +20,3 @@ export async function GET() {
   }
   return Response.json({ ok: true, connected: true, table: "recipes", count: data?.length ?? 0, data });
 }
-

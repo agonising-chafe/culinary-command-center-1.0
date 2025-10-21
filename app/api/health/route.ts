@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
+export const runtime = 'nodejs';
+export const preferredRegion = ["pdx1", "sfo1", "lhr1"];
 
 const schema = process.env.NEXT_PUBLIC_SUPABASE_SCHEMA || "public";
 
@@ -49,4 +51,3 @@ export async function GET() {
     return json({ ok: false, env, supabase: { reachable: false, error: err?.message || String(err) } }, 200);
   }
 }
-

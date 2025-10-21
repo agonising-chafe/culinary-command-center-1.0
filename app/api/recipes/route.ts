@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
+export const runtime = 'nodejs';
+export const preferredRegion = ["pdx1", "sfo1", "lhr1"];
 
 const schema = process.env.NEXT_PUBLIC_SUPABASE_SCHEMA || "public";
 const imageColumn = process.env.NEXT_PUBLIC_SUPABASE_IMAGE_COLUMN || "image_url";
