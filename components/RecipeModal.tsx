@@ -17,6 +17,11 @@ export default function RecipeModal() {
     setToast(msg);
     setTimeout(() => setToast(null), 2000);
   };
+  const nameValid = (name || "").trim().length > 0;
+  const timeNum = Number(time);
+  const calNum = Number(calories);
+  const timeValid = Number.isFinite(timeNum) && timeNum >= 0;
+  const calValid = Number.isFinite(calNum) && calNum >= 0;
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
