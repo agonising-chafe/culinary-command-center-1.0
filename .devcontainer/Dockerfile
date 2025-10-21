@@ -7,6 +7,10 @@ RUN apt-get update \
        git curl ca-certificates ripgrep \
     && rm -rf /var/lib/apt/lists/*
 
+# Enable Corepack and activate pnpm/yarn so you can choose your package manager
+RUN corepack enable \
+    && corepack prepare pnpm@latest --activate \
+    && corepack prepare yarn@stable --activate || true
+
 # Default workdir is set by devcontainers to /workspaces/<repo>
 USER node
-

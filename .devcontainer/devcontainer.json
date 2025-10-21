@@ -17,7 +17,7 @@
       ]
     }
   },
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "corepack enable && (pnpm install || yarn install || npm install)",
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
