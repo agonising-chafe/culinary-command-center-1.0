@@ -1,6 +1,6 @@
 {
   "name": "CulinaryCC Sandbox",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "build": { "dockerfile": "Dockerfile" },
   "remoteUser": "node",
   "updateRemoteUserUID": true,
   "containerEnv": {
@@ -26,4 +26,3 @@
     }
   }
 }
-
