@@ -2,10 +2,21 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useRecipeStore } from "@/lib/useRecipeStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function RecipeModal() {
-  const { selected, clearSelection, saveRecipe, deleteRecipe, source } = useRecipeStore();
+  const { selected, clearSelection, saveRecipe, deleteRecipe, source, mode } = useRecipeStore();
+
+  const [name, setName] = useState("");
+  const [time, setTime] = useState<string | number>(0);
+  const [calories, setCalories] = useState<string | number>(0);
+  const [ingredientsText, setIngredientsText] = useState("");
+  const [instructionsText, setInstructionsText] = useState("");
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2000);
+  };
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -14,6 +25,25 @@ export default function RecipeModal() {
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [clearSelection]);
+
+  useEffect(() => {
+    if (!selected) return;
+    setName(selected.name || "");
+    setTime(selected.time ?? 0);
+    setCalories(selected.calories ?? 0);
+    const ing = Array.isArray(selected.ingredients)
+      ? selected.ingredients.join("\n")
+      : selected.ingredients
+      ? String(selected.ingredients)
+      : "";
+    setIngredientsText(ing);
+    const instr = Array.isArray(selected.instructions)
+      ? selected.instructions.join("\n")
+      : selected.instructions
+      ? String(selected.instructions)
+      : "";
+    setInstructionsText(instr);
+  }, [selected]);
 
   return (
     <AnimatePresence>
@@ -44,46 +74,115 @@ export default function RecipeModal() {
               <button
                 onClick={clearSelection}
                 className="absolute top-3 right-3 rounded-full bg-black/60 text-white px-2 py-1 text-sm hover:bg-black/80 transition"
+                aria-label="Close"
               >
-                ?
+                ✕
               </button>
             </div>
 
             <div className="p-6 space-y-4">
-              <h2 className="text-2xl font-semibold text-gray-800">{selected.name}</h2>
-              <div className="flex gap-4 text-sm text-gray-500">
-                <span>? {selected.time} min</span>
-                <span>?? {selected.calories} kcal</span>
-              </div>
-
-              <section>
-                <h3 className="font-semibold mb-1 text-gray-700">Ingredients</h3>
-                <ul className="list-disc list-inside text-sm text-gray-600 space-y-0.5">
-                  {selected.ingredients?.length ? (
-                    selected.ingredients.map((ing: string, i: number) => <li key={i}>{ing}</li>)
-                  ) : (
-                    <li className="italic text-gray-400">No ingredients listed.</li>
-                  )}
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="font-semibold mb-1 text-gray-700">Instructions</h3>
-                <ol className="list-decimal list-inside text-sm text-gray-600 space-y-1">
-                  {Array.isArray(selected.instructions) ? (
-                    selected.instructions.map((step: string, i: number) => <li key={i}>{step}</li>)
-                  ) : (
-                    <li>{selected.instructions || "No instructions provided."}</li>
-                  )}
-                </ol>
-              </section>
+              {mode === "edit" ? (
+                <>
+                  <input
+                    className="w-full border rounded px-3 py-2 text-lg font-semibold text-gray-800"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Recipe name"
+                  />
+                  <div className="flex gap-4 text-sm text-gray-700">
+                    <label className="flex items-center gap-2">
+                      <span>⏱ Time</span>
+                      <input
+                        type="number"
+                        className="w-20 border rounded px-2 py-1"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                        min={0}
+                      />
+                      <span>min</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <span>🔥 Calories</span>
+                      <input
+                        type="number"
+                        className="w-24 border rounded px-2 py-1"
+                        value={calories}
+                        onChange={(e) => setCalories(e.target.value)}
+                        min={0}
+                      />
+                      <span>kcal</span>
+                    </label>
+                  </div>
+                  <section>
+                    <h3 className="font-semibold mb-1 text-gray-700">Ingredients</h3>
+                    <textarea
+                      className="w-full border rounded px-3 py-2 text-sm text-gray-700 h-28"
+                      value={ingredientsText}
+                      onChange={(e) => setIngredientsText(e.target.value)}
+                      placeholder="One ingredient per line"
+                    />
+                  </section>
+                  <section>
+                    <h3 className="font-semibold mb-1 text-gray-700">Instructions</h3>
+                    <textarea
+                      className="w-full border rounded px-3 py-2 text-sm text-gray-700 h-36"
+                      value={instructionsText}
+                      onChange={(e) => setInstructionsText(e.target.value)}
+                      placeholder="One step per line"
+                    />
+                  </section>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-2xl font-semibold text-gray-800">{selected.name}</h2>
+                  <div className="flex gap-4 text-sm text-gray-500">
+                    <span>⏱ {selected.time} min</span>
+                    <span>🔥 {selected.calories} kcal</span>
+                  </div>
+                  <section>
+                    <h3 className="font-semibold mb-1 text-gray-700">Ingredients</h3>
+                    <ul className="list-disc list-inside text-sm text-gray-600 space-y-0.5">
+                      {selected.ingredients?.length ? (
+                        selected.ingredients.map((ing: string, i: number) => <li key={i}>{ing}</li>)
+                      ) : (
+                        <li className="italic text-gray-400">No ingredients listed.</li>
+                      )}
+                    </ul>
+                  </section>
+                  <section>
+                    <h3 className="font-semibold mb-1 text-gray-700">Instructions</h3>
+                    <ol className="list-decimal list-inside text-sm text-gray-600 space-y-1">
+                      {Array.isArray(selected.instructions) ? (
+                        selected.instructions.map((step: string, i: number) => <li key={i}>{step}</li>)
+                      ) : (
+                        <li>{selected.instructions || "No instructions provided."}</li>
+                      )}
+                    </ol>
+                  </section>
+                </>
+              )}
 
               <div className="flex justify-end gap-3 pt-3">
                 <button
                   onClick={async () => {
                     if (!selected) return;
+                    const payload = {
+                      ...selected,
+                      name: name || selected.name,
+                      time: Number(time) || 0,
+                      calories: Number(calories) || 0,
+                      ingredients: ingredientsText
+                        .split("\n")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                      instructions: instructionsText
+                        .split("\n")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    } as any;
                     try {
-                      await saveRecipe(selected);
+                      await saveRecipe(payload);
+                      showToast("Saved");
                     } catch {}
                   }}
                   className="px-3 py-1.5 rounded bg-green-600 text-white hover:bg-green-700 disabled:opacity-60"
@@ -96,7 +195,8 @@ export default function RecipeModal() {
                   onClick={async () => {
                     if (!selected) return;
                     await deleteRecipe(selected.id);
-                    clearSelection();
+                    showToast("Deleted");
+                    setTimeout(() => clearSelection(), 500);
                   }}
                   className="px-3 py-1.5 rounded bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
                   disabled={!selected || source !== "db"}
@@ -108,7 +208,7 @@ export default function RecipeModal() {
                   onClick={() => window.print()}
                   className="px-3 py-1.5 rounded bg-gray-100 text-gray-700 hover:bg-gray-200"
                 >
-                  ??? Print
+                  Print
                 </button>
                 <button
                   onClick={async () => {
@@ -124,9 +224,14 @@ export default function RecipeModal() {
                   }}
                   className="px-3 py-1.5 rounded bg-primary text-white hover:opacity-90"
                 >
-                  ?? Share
+                  Share
                 </button>
               </div>
+              {toast && (
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-md bg-gray-900 text-white px-3 py-2 text-sm shadow-lg" role="status">
+                  {toast}
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>
@@ -134,4 +239,3 @@ export default function RecipeModal() {
     </AnimatePresence>
   );
 }
-
